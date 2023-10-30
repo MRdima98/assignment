@@ -11,7 +11,12 @@ public class Todos {
     [JsonPropertyName("title")]
     public string? Title { get; set;}
 
-
     [JsonPropertyName("completed")]
+    public bool Completed { get; set;}
+}
+
+public class AllTodos {
+    public string? Title { get; set;}
+
     public bool Completed { get; set;}
 }

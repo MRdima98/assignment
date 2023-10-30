@@ -2,7 +2,6 @@ namespace assignment;
 using System.Text.Json.Serialization;
 
 public class User {
-    /* public int TemperatureF => 32 + (int)(TemperatureC / 0.5556); */
 
     [JsonPropertyName("id")]
     public int Id { get; set; }
