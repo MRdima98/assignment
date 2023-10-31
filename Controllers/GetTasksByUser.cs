@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using assignment.Utilities;
 
 namespace assignment.Controllers;
@@ -9,15 +8,15 @@ namespace assignment.Controllers;
 public class GetTasksByUserController : ControllerBase {
     private static bool USER_FILTER = true;
 
-    public GetTasksByUserController() {
-    }
+    public GetTasksByUserController() { }
 
     [HttpGet()]
-    public async Task<List<AllTodos>> Get( [FromQuery] int limit,
+    public async Task<List<TodosWithUser>> Get( [FromQuery] int limit,
         [FromQuery] int offset, [FromQuery] int userID) {
 
         List<Todos> todos = await DataUtility.FetchToDos();
-        return DataUtility.FilterTodos(limit, offset, userID, USER_FILTER, todos);
+        List<User> users = await DataUtility.FetchUsers();
+        return DataUtility.FilterTodos(limit, offset, userID, USER_FILTER, todos, users);
     }
 }
 

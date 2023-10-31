@@ -17,7 +17,7 @@ public class DataUtility {
         return new List<Todos> ();
     }
 
-    static async Task<List<User>> FetchUsers() {
+    public static async Task<List<User>> FetchUsers() {
         using ( var httpClient = new HttpClient()){
             string api = "https://jsonplaceholder.typicode.com/users";
             var response = await httpClient.GetAsync(api);
@@ -32,33 +32,45 @@ public class DataUtility {
         return new List<User>();
     }
     
-    public static List<AllTodos> FilterTodos(
-        int limit, int offset, int userID, bool filterUser, List<Todos> todos
-        ) {
-        List<AllTodos> allTodos = new List<AllTodos>();
+    public static List<TodosWithUser> CombineData(List<User> users, List<Todos> todos) {
+        List<TodosWithUser> todosWithUsers = new List<TodosWithUser>();
+        foreach (Todos todo in todos) {
+            TodosWithUser tmp = new TodosWithUser();
+            tmp.Id = todo.Id;
+            tmp.User = users.Find(user => user.Id == todo.UserId);
+            tmp.Title = todo.Title; 
+            tmp.Completed = todo.Completed;
+            todosWithUsers.Add(tmp);
+        }
+        return todosWithUsers;
+    }
+    
+    public static List<TodosWithUser> FilterTodos(int limit, int offset, int userID,
+            bool filterUser, List<Todos> todos, List<User> users
+            ) {
+        List<TodosWithUser> todosWithUsers = new List<TodosWithUser>();
+        todosWithUsers = CombineData(users, todos);
 
-        foreach (Todos item in todos) {
-            if (userID != item.UserId && filterUser) {
-                continue;
+        foreach (TodosWithUser item in todosWithUsers.ToList()) {
+            if (item?.User?.Id != userID && filterUser) {
+                if(item != null) {
+                    todosWithUsers.Remove(item);
+                }
             }
-            AllTodos tmp = new AllTodos();
-            tmp.Title = item.Title;
-            tmp.Completed = item.Completed;
-            allTodos.Add(tmp);
         }
 
-        if (offset > allTodos.Count()) {
-            return new List<AllTodos>();
+        if (offset > todosWithUsers.Count()) {
+            return new List<TodosWithUser>();
         }
 
         if (offset > 0) {
-            allTodos.RemoveRange(0, offset);
+            todosWithUsers.RemoveRange(0, offset);
         }
 
-        if (limit > 0 && limit < allTodos.Count()) {
-            allTodos.RemoveRange(limit, allTodos.Count() - limit);
+        if (limit > 0 && limit < todosWithUsers.Count()) {
+            todosWithUsers.RemoveRange(limit, todosWithUsers.Count() - limit);
         }
-        
-        return allTodos;
+
+        return todosWithUsers;
     }
 }
