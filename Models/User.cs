@@ -40,6 +40,9 @@ public class Address {
 
     [JsonPropertyName("zipcode")]
     public string? Zipcode { get; set; }
+
+    [JsonPropertyName("geo")]
+    public Geo? Geo { get; set; }
 }
 
 public class Geo {

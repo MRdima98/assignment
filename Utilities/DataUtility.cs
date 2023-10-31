@@ -3,7 +3,7 @@ using System.Text.Json;
 
 public class DataUtility {
     public static async Task<List<Todos>> FetchToDos() {
-        using ( var httpClient = new HttpClient()){
+        using (var httpClient = new HttpClient()){
             string api = "https://jsonplaceholder.typicode.com/todos";
             var response = await httpClient.GetAsync(api);
             if (response.IsSuccessStatusCode) {
@@ -18,7 +18,7 @@ public class DataUtility {
     }
 
     public static async Task<List<User>> FetchUsers() {
-        using ( var httpClient = new HttpClient()){
+        using (var httpClient = new HttpClient()){
             string api = "https://jsonplaceholder.typicode.com/users";
             var response = await httpClient.GetAsync(api);
             if (response.IsSuccessStatusCode) {
@@ -51,13 +51,17 @@ public class DataUtility {
         List<TodosWithUser> todosWithUsers = new List<TodosWithUser>();
         todosWithUsers = CombineData(users, todos);
 
-        foreach (TodosWithUser item in todosWithUsers.ToList()) {
-            if (item?.User?.Id != userID && filterUser) {
-                if(item != null) {
-                    todosWithUsers.Remove(item);
-                }
-            }
+        if (filterUser) {
+          todosWithUsers = todosWithUsers.Where(el => el?.User?.Id == userID).ToList();
         }
+        
+        /* foreach (TodosWithUser item in todosWithUsers.ToList()) { */
+        /*     if (item?.User?.Id != userID && filterUser) { */
+        /*         if(item != null) { */
+        /*             todosWithUsers.Remove(item); */
+        /*         } */
+        /*     } */
+        /* } */
 
         if (offset > todosWithUsers.Count()) {
             return new List<TodosWithUser>();
@@ -65,6 +69,10 @@ public class DataUtility {
 
         if (offset > 0) {
             todosWithUsers.RemoveRange(0, offset);
+        }
+
+        if (limit > todosWithUsers.Count()) {
+            return new List<TodosWithUser>();
         }
 
         if (limit > 0 && limit < todosWithUsers.Count()) {
