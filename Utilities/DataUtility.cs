@@ -55,14 +55,6 @@ public class DataUtility {
           todosWithUsers = todosWithUsers.Where(el => el?.User?.Id == userID).ToList();
         }
         
-        /* foreach (TodosWithUser item in todosWithUsers.ToList()) { */
-        /*     if (item?.User?.Id != userID && filterUser) { */
-        /*         if(item != null) { */
-        /*             todosWithUsers.Remove(item); */
-        /*         } */
-        /*     } */
-        /* } */
-
         if (offset > todosWithUsers.Count()) {
             return new List<TodosWithUser>();
         }
@@ -72,7 +64,7 @@ public class DataUtility {
         }
 
         if (limit > todosWithUsers.Count()) {
-            return new List<TodosWithUser>();
+            return todosWithUsers;
         }
 
         if (limit > 0 && limit < todosWithUsers.Count()) {

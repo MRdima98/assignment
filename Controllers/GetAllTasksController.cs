@@ -12,10 +12,15 @@ public class GetAllTasksController : ControllerBase {
     public GetAllTasksController() { }
 
     [HttpGet()]
-    public async Task<List<TodosWithUser>> Get([FromQuery] int limit, [FromQuery] int offset) {
+    public async Task<IActionResult> Get([FromQuery] int limit, [FromQuery] int offset) {
         List<Todos> todos = await DataUtility.FetchToDos();
         List<User> users = await DataUtility.FetchUsers();
-        return DataUtility.FilterTodos(limit, offset, EMPTY_FIELD, NO_USER_FILTER, todos, users);
+        List<TodosWithUser> return_data = DataUtility.
+          FilterTodos(limit, offset, EMPTY_FIELD, NO_USER_FILTER, todos, users);
+        if (return_data.Count() == 0) {
+            return NotFound(return_data);
+        }
+        return Ok(return_data);
     }
 }
 

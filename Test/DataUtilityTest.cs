@@ -50,7 +50,7 @@ public class DataUtilityTest {
     public void TestBadLimitFilter() {
         List<TodosWithUser> test = DataUtility.FilterTodos(BAD_LIMIT, 0, 0, false, todos, users);
         Assert.AreEqual(JsonSerializer.Serialize(test), 
-            JsonSerializer.Serialize(new List<TodosWithUser>()));
+            JsonSerializer.Serialize(todosWithUsers));
     }
 
     [TestMethod]
