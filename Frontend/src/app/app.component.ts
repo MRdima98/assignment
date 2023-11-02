@@ -55,14 +55,29 @@ export class AppComponent {
     }
 
     setUserId(event: Event): void {
-        this.userId = parseInt((event.target as HTMLInputElement).value);
+        const input = parseInt((event.target as HTMLInputElement).value);
+        if (Number.isNaN(input)){
+            this.userId = null;
+        } else {
+            this.userId = parseInt((event.target as HTMLInputElement).value);
+        }
     }
 
     setLimit(event: Event): void {
-        this.limit = parseInt((event.target as HTMLInputElement).value);
+        const input = parseInt((event.target as HTMLInputElement).value);
+        if (Number.isNaN(input)){
+            this.limit = null;
+        } else {
+            this.limit = parseInt((event.target as HTMLInputElement).value);
+        }
     }
 
     setOffset(event: Event): void {
-        this.offset = parseInt((event.target as HTMLInputElement).value);
+        const input = parseInt((event.target as HTMLInputElement).value);
+        if (Number.isNaN(input)){
+            this.offset = null;
+        } else {
+            this.offset = parseInt((event.target as HTMLInputElement).value);
+        }
     }
 }
