@@ -22,11 +22,26 @@ To verify that the system is working you can ping
 ```
 To get all todos filtered by offset and limit you can use 
 ```
-getAllTasks?limit=<number>&offset<number>
+/getAllTasks?limit=<number>&offset<number>
 ```
 To get all todos filtered by user, offset and limit you can use
 ```
-GetTasksByUser?userID=<id>&limit=<number>&offset<number>
+/getTasksByUser?userID=<id>&limit=<number>&offset<number>
 ```
 Naturally each endpoint works without any param. If your params are invalid 
 it will return a 404.
+
+## Frontend
+The frontend was developed with angular.
+For the sake of simplicity the folder was saved inside the same project as 
+"Frontend".
+Make sure to have ``ng`` and ``npm``
+(or any package manager). The install the npm packages with 
+``` 
+npm install
+``` 
+and run the server with 
+``` 
+ng serve --open
+```
+
