@@ -46,4 +46,5 @@ and run the server with
 ``` 
 ng serve --open
 ```
-
+## Pipeline
+On push and pull to main, the pipeline will build and test the project. 
