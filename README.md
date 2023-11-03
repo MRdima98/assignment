@@ -28,7 +28,8 @@ To get all todos filtered by user, offset and limit you can use
 ```
 /getTasksByUser?userID=<id>&limit=<number>&offset<number>
 ```
-Naturally each endpoint works without any param. If your params are invalid 
+Offset and limit are optional for both endpoints, while 
+userID is needed. If your params are invalid 
 it will return a 404.
 
 ## Frontend
@@ -36,7 +37,8 @@ The frontend was developed with angular.
 For the sake of simplicity the folder was saved inside the same project as 
 "Frontend".
 Make sure to have ``ng`` and ``npm``
-(or any package manager). The install the npm packages with 
+(or any other package manager) then 
+enter the Frontend folder. In my case to update the folder using npm:
 ``` 
 npm install
 ``` 
